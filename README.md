@@ -109,6 +109,33 @@ networking. Driven by real-world problems and continuous learning.
 
 ## Featured Projects
 
+### 🛡️ llm-warden — *Open-source Guardrail Gateway for LLM APIs*
+
+**Challenge:** Existing LLM gateways only guard finished responses — streaming
+output can leak PII token-by-token before any post-hoc filter sees it.
+
+**Key Achievements:**
+- Built a self-hostable **TypeScript/Express** gateway with three first-class
+  guardrail stages — **input / stream / output** — over a normalized provider
+  event model (Anthropic Messages + any OpenAI-compatible API).
+- Engineered **mid-stream SSE redaction** with chunk-boundary buffering and a
+  tested **chunk-boundary invariance** guarantee: any re-chunking of a stream
+  produces byte-identical redacted output, enforced by a 192-case fuzz suite
+  in CI.
+- Implemented the security layer: hashed **virtual keys** (constant-time
+  lookup), opt-in **HMAC signed requests** with replay protection, token-bucket
+  rate limiting, and checksum-validated PII + secrets detection (Luhn, IBAN
+  mod-97, AWS/GitHub keys).
+- Shipped production hygiene: fail-closed config, per-provider circuit
+  breakers, content-safe logging, distroless Docker image, GitHub Actions CI
+  with GHCR releases.
+
+**Tech Stack:** TypeScript · Node.js · Express · zod · vitest · Docker · GitHub Actions
+
+🔗 [github.com/kavumahamza/llm-warden](https://github.com/kavumahamza/llm-warden) — `docker compose up` gives a live redaction demo, no API key needed.
+
+---
+
 ### 🤖 Maximus AI-Agent Platform — *Lead Backend & Security Engineer*
 
 **Challenge:** Take AI agents from prototype to production safely — a system that streams
